@@ -58,9 +58,9 @@ app.delete("/api/users/:userId/favorites/:id", async (req, res, next) => {
   try {
     await deleteFavorite({
       user_id: req.params.userId,
-      product_id: req.params.id,
+      product_id: req.params.productId,
     });
-    res.sendStatus(204);
+    res.sendStatus(204); // No Content, successful deletion
   } catch (ex) {
     next(ex);
   }
