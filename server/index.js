@@ -53,14 +53,19 @@ app.get("/api/users/:id/favorites", async (req, res, next) => {
     next(error);
   }
 });
-// Delete
+// Delete // Use product id when testing
 app.delete("/api/users/:userId/favorites/:id", async (req, res, next) => {
   try {
-    await deleteFavorite({
-      user_id: req.params.userId,
-      product_id: req.params.productId,
+    const response = await deleteFavorite({
+      userId: req.params.userId,
+      productId: req.params.id,
     });
-    res.sendStatus(204); // No Content, successful deletion
+    console.log(response);
+    if (response.rowCount !== 1) {
+      return res.sendStatus(404);
+    } else {
+      res.sendStatus(204);
+    }
   } catch (ex) {
     next(ex);
   }

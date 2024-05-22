@@ -34,7 +34,7 @@ const createTables = () => {
 
 // username and password are being desctructured
 const createUser = async ({ username, password }) => {
-  password = await bcrypt.hash(password, 5);
+  password = await bcrypt.hash(password, 5); // hash : method
 
   const SQL = `
           INSERT INTO "user" (id, username, password)
@@ -98,13 +98,15 @@ const fetchFavorites = async (userId) => {
   return results.rows;
 };
 
-const deleteFavorite = async ({ user_id, product_id }) => {
+const deleteFavorite = async ({ userId, productId }) => {
+  console.log({ userId, productId });
+
   const SQL = ` 
     DELETE 
     FROM favorite
     WHERE user_id = $1 AND product_id = $2`;
 
-  await client.query(SQL, [user_id, product_id]);
+  return client.query(SQL, [userId, productId]);
 };
 
 module.exports = {
